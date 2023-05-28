@@ -1,12 +1,13 @@
-# ChatGPT.nvim
+# gpt4all.nvim
 
-![GitHub Workflow Status](http://img.shields.io/github/actions/workflow/status/jackMort/ChatGPT.nvim/default.yml?branch=main&style=for-the-badge)
+![GitHub Workflow Status](http://img.shields.io/github/actions/workflow/status/doctorfree/gpt4all.nvim/default.yml?branch=main&style=for-the-badge)
 ![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua)
 
-`ChatGPT` is a Neovim plugin that allows you to interact with OpenAI's GPT-3 language model.
-With `ChatGPT`, you can ask questions and get answers from GPT-3 in real-time.
+`gpt4all` is a Neovim plugin that allows you to interact with GPT4ALL's GPT-3 language model.
+With `gpt4all`, you can ask questions and get answers from GPT-3 in real-time.
 
-![preview image](https://github.com/jackMort/ChatGPT.nvim/blob/media/preview-2.png?raw=true)
+![preview image](https://github.com/doctorfree/gpt4all.nvim/blob/media/preview-2.png?raw=true)
+
 ## Installation
 
 - Make sure you have `curl` installed.
@@ -21,9 +22,9 @@ The OpenAI API key can be provided in one of the following two ways:
 ```lua
 -- Packer
 use({
-  "jackMort/ChatGPT.nvim",
+  "doctorfree/gpt4all.nvim",
     config = function()
-      require("chatgpt").setup()
+      require("gpt4all").setup()
     end,
     requires = {
       "MunifTanjim/nui.nvim",
@@ -34,10 +35,10 @@ use({
 
 -- Lazy
 {
-  "jackMort/ChatGPT.nvim",
+  "doctorfree/gpt4all.nvim",
     event = "VeryLazy",
     config = function()
-      require("chatgpt").setup()
+      require("gpt4all").setup()
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -49,7 +50,7 @@ use({
 
 ## Configuration
 
-`ChatGPT.nvim` comes with the following defaults, you can override them by passing config as setup param
+`gpt4all.nvim` comes with the following defaults, you can override them by passing config as setup param
 
 ```lua
 {
@@ -116,7 +117,7 @@ use({
         highlight = "FloatBorder",
         style = "rounded",
         text = {
-          top = " ChatGPT ",
+          top = " gpt4all ",
         },
       },
       win_options = {
@@ -208,7 +209,7 @@ The following configuration would use 1Passwords CLI, `op`, to fetch the API key
 from the `credential` field of the `OpenAI` entry.
 
 ```lua
-require("chatgpt").setup({
+require("gpt4all").setup({
     api_key_cmd = "op read op://private/OpenAI/credential --no-newline"
 })
 ```
@@ -217,7 +218,7 @@ The following configuration would use GPG to decrypt a local file containing the
 API key
 
 ```lua
-require("chatgpt").setup({
+require("gpt4all").setup({
     api_key_cmd = "gpg --decrypt ~/secret.txt.gpg 2>/dev/null"
 })
 ```
@@ -226,28 +227,31 @@ require("chatgpt").setup({
 
 Plugin exposes following commands:
 
-#### `ChatGPT`
-`ChatGPT` command which opens interactive window using the `gpt-3.5-turbo`
+#### `Gpt4All`
+
+`Gpt4All` command which opens interactive window using the `gpt-3.5-turbo`
 model.
-(also known as `ChatGPT`)
 
-#### `ChatGPTActAs`
-`ChatGPTActAs` command which opens a prompt selection from [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) to be used with the `gpt-3.5-turbo` model.
+#### `Gpt4AllActAs`
 
-![preview image](https://github.com/jackMort/ChatGPT.nvim/blob/media/preview-3.png?raw=true)
+`Gpt4AllActAs` command which opens a prompt selection from [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts) to be used with the `gpt-3.5-turbo` model.
 
-#### `ChatGPTEditWithInstructions`
-`ChatGPTEditWithInstructions` command which opens interactive window to edit selected text or whole window using the `code-davinci-edit-002` model (GPT 3.5 fine-tuned for coding).
+![preview image](https://github.com/doctorfree/gpt4all.nvim/blob/media/preview-3.png?raw=true)
+
+#### `Gpt4AllEditWithInstructions`
+
+`Gpt4AllEditWithInstructions` command which opens interactive window to edit selected text or whole window using the `code-davinci-edit-002` model (GPT 3.5 fine-tuned for coding).
 
 You can map it usig the Lua API, e.g. using `which-key.nvim`:
+
 ```lua
-local chatgpt = require("chatgpt")
+local gpt4all = require("gpt4all")
 wk.register({
     p = {
-        name = "ChatGPT",
+        name = "gpt4all",
         e = {
             function()
-                chatgpt.edit_with_instructions()
+                gpt4all.edit_with_instructions()
             end,
             "Edit with instructions",
         },
@@ -260,29 +264,31 @@ wk.register({
 
 - [demo video](https://www.youtube.com/watch?v=dWe01EV0q3Q).
 
-![preview image](https://github.com/jackMort/ChatGPT.nvim/blob/media/preview.png?raw=true)
+![preview image](https://github.com/doctorfree/gpt4all.nvim/blob/media/preview.png?raw=true)
 
-#### `ChatGPTRun`
+#### `Gpt4AllRun`
 
-`ChatGPTRun [action]` command which runs specific actions -- see [`actions.json`](./lua/chatgpt/flows/actions/actions.json) file for a detailed list. Available actions are:
-  1. `grammar_correction`
-  2. `translate`
-  3. `keywords`
-  4. `docstring`
-  5. `add_tests`
-  6. `optimize_code`
-  7. `summarize`
-  8. `fix_bugs`
-  9. `explain_code`
-  10. `roxygen_edit`
-  11. `code_readability_analysis` -- see [demo](https://youtu.be/zlU3YGGv2zY)
+`Gpt4AllRun [action]` command which runs specific actions -- see [`actions.json`](./lua/gpt4all/flows/actions/actions.json) file for a detailed list. Available actions are:
+
+1. `grammar_correction`
+2. `translate`
+3. `keywords`
+4. `docstring`
+5. `add_tests`
+6. `optimize_code`
+7. `summarize`
+8. `fix_bugs`
+9. `explain_code`
+10. `roxygen_edit`
+11. `code_readability_analysis` -- see [demo](https://youtu.be/zlU3YGGv2zY)
 
 All the above actions are using `gpt-3.5-turbo` model.
 
-It is possible to define custom actions with a JSON file. See [`actions.json`](./lua/chatgpt/flows/actions/actions.json) for an example. The path of custom actions can be set in the config (see `actions_paths` field in the config example above).
+It is possible to define custom actions with a JSON file. See [`actions.json`](./lua/gpt4all/flows/actions/actions.json) for an example. The path of custom actions can be set in the config (see `actions_paths` field in the config example above).
 
 An example of custom action may look like this: (`#` marks comments)
-```python
+
+````python
 {
   "action_name": {
     "type": "chat", # or "completion" or "edit"
@@ -305,7 +311,8 @@ An example of custom action may look like this: (`#` marks comments)
     }
   }
 }
-```
+````
+
 The `edit` strategy consists in showing the output side by side with the iput and
 available for further editing requests.
 For now, `edit` strategy is implemented for `chat` type only.
@@ -315,8 +322,10 @@ The `display` strategy shows the output in a float window.
 `append` and `replace` modify the text directly in the buffer.
 
 ### Interactive popup
-When using `ChatGPT` and `ChatGPTEditWithInstructions`, the following
+
+When using `gpt4all` and `Gpt4AllEditWithInstructions`, the following
 keybindings are available:
+
 - `<C-Enter>` [Both] to submit.
 - `<C-y>` [Both] to copy/yank last answer.
 - `<C-o>` [Both] Toggle settings window.
@@ -337,4 +346,4 @@ keybindings are available:
 When the setting window is opened (with `<C-o>`), settigs can be modified by
 pressing `Enter` on the related config. Settings are saved across sections
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/jackMort)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/doctorfree)

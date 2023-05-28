@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD024 -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -9,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## Added
 
+- Forked with intention of porting to use of GPT4ALL models rather than OpenAI
 - OpenAI API key can now be securely provided by an external program using the
   `api_key_cmd` configuration option. The value assigned to `api_key_cmd` must
   be a string and is executed as is during startup. The value as stdout by the
